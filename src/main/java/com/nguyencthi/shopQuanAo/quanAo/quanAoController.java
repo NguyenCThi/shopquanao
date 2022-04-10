@@ -27,11 +27,7 @@ import com.nguyencthi.shopQuanAo.nguoiDung.nguoiDungRepository;
 
 @Controller
 public class quanAoController {
-<<<<<<< HEAD
-@Autowired
-=======
 	@Autowired
->>>>>>> b34dfa16e526c75a47a36c795e484f4ad07b72de
 	private quanAoRepository repoQA;
 	@Autowired
 	private HttpSession session;
@@ -45,7 +41,6 @@ public class quanAoController {
     private loaiQuanAoRepository lqaRepo;
     @Autowired 
     private quanAoServiceImpl qaService;
-<<<<<<< HEAD
     
 //    -----
     @GetMapping("/products/details/{idQuanAo}")
@@ -81,7 +76,8 @@ public class quanAoController {
     		return "detailsQA";
     	}
 }
-=======
+
+// Phuc voo day
 
 	
 	
@@ -123,4 +119,3 @@ public class quanAoController {
 	
 
 }
->>>>>>> b34dfa16e526c75a47a36c795e484f4ad07b72de
