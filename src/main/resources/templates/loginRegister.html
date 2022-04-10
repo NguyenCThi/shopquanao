@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link th:href="@{/css/loginRegister.css}" rel="stylesheet"
+	type="text/css">
+<title>Đăng nhập và đăng ký</title>
+</head>
+
+<body>
+
+	<div class="container" id="container">
+		<div class="form-container sign-up-container">
+			<form th:action="@{/process_register}" method="POST"
+				th:object="${nd}">
+				<h1>Đăng ký</h1>
+				<input type="text" placeholder="Họ tên" field="*{hoTen}"
+					name="hoTen" required /> <input type="email" placeholder="Email"
+					field="*{email}" name="email" required /> <input type="password"
+					placeholder="Password" field="*{password}" required minlength="6"
+					maxlength="24" name="password" /> <input type="number"
+					placeholder="Số điện thoại" field="*{soDienThoai}" required
+					minlength="10" maxlength="11" name="soDienThoai" />
+				<p style="color: red" th:text="${ERROR}"></p>
+				<button type="submit">Sign Up</button>
+				
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<form th:action="@{/dang-nhap}" method="POST"
+				>
+				<h1>Đăng nhập</h1>
+				<input type="email" placeholder="Email" name="emailLogin" required />
+				<input type="password" placeholder="Password" name="passwordLogin"
+					required /> <a href="#">Forgot your password?</a>
+				<p><input type="checkbox" name="remember-me"/>Nhớ đăng nhập cho lần sau.</p>
+				<button type="submit">Đăng nhập</button>
+				<p style="color: red" th:text="${ERROR1}"></p>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>Welcome Back!</h1>
+					<p>To keep connected with us please login with your personal
+						info</p>
+					<button class="ghost" id="signIn">Sign In</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>Hello, Friend!</h1>
+					<p>Enter your personal details and start journey with us</p>
+					<button class="ghost" id="signUp">Sign Up</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!---javasrcipt-->
+	<script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add('right-panel-active');
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove('right-panel-active');
+        });
+    </script>
+</body>
+
+</html>

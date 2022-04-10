@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html lang="vn">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="max-age=604800" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Trang Sản Phẩm HTC</title>
+
+
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<script th:src="@{/js/jquery-2.0.0.min.js}" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script th:src="@{/js/bootstrap.bundle.min.js}" type="text/javascript"></script>
+<link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css" />
+
+<!-- Font awesome 5 -->
+<link th:href="@{/fonts/fontawesome/css/all.min.css}" type="text/css"
+	rel="stylesheet">
+
+<!-- custom style -->
+<link th:href="@{/css/ui.css}" rel="stylesheet" type="text/css" />
+<link th:href="@{/css/responsive.css}" rel="stylesheet" type="text/css" />
+
+<!-- custom javascript -->
+<script th:src="@{/js/script.js}" type="text/javascript"></script>
+<script th:src="@{/js/quantity_control.js}" type="text/javascript"></script>
+<script th:src="@{/js/add_to_cart.js}" type="text/javascript"></script>
+<script th:src="@{/js/common.js}"></script>
+</head>
+
+<body>
+
+	<section class="header-main border-bottom">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-xl-2 col-lg-3 col-md-12">
+					<a href="/" class="brand-wrap"> <img class="logo"
+						src="/images/logoIndex.png">
+					</a>
+					<!-- brand-wrap.// -->
+				</div>
+				<div class="col-xl-6 col-lg-5 col-md-6">
+					<form action="#" class="search-header">
+						<div class="input-group w-100">
+
+							<input type="text" class="form-control" placeholder="Tìm kiếm...">
+
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="submit">
+									<i class="fa fa-search"></i> Tìm kiếm
+								</button>
+							</div>
+						</div>
+					</form>
+					<!-- search-wrap .end// -->
+				</div>
+				<!-- col.// -->
+				<div class="col-xl-4 col-lg-4 col-md-6">
+					<div class="widgets-wrap float-md-right">
+						<div class="widget-header mr-3" sec:authorize="isAuthenticated()">
+							<form th:action="@{/logout}" method="post" th:hidden="true"
+								name="LogoutForm">
+								<input type="submit" value="Logout" />
+							</form>
+							<a id="logoutLink" href="" class="widget-view">
+								<div class="icon-area">
+									<i class="fa fa-user"></i>
+								</div> <small class="text"> Đăng xuất </small>
+							</a>
+						</div>
+						<div class="widget-header mr-3" sec:authorize="isAnonymous()">
+							<a href="/dang-nhap" class="widget-view">
+								<div class="icon-area">
+									<i class="fa fa-user"></i>
+								</div> <small class="text"> Đăng nhập </small>
+							</a>
+						</div>
+						<div class="widget-header mr-3">
+							<a href="/hoa-don-nd" class="widget-view">
+								<div class="icon-area">
+									<i class="fa fa-store"></i> <span class="notify">0</span>
+								</div> <small class="text"> Hóa đơn </small>
+							</a>
+						</div>
+						<div class="widget-header">
+							<a href="/gio-hang" class="widget-view">
+								<div class="icon-area">
+									<i class="fa fa-shopping-cart"></i> <span class="notify"
+										th:unless="${cartItems.size()}">0</span> <span class="notify"
+										th:if="${cartItems.size()}" th:text="${cartItems.size()}"></span>
+								</div> <small class="text"> Cart </small>
+							</a>
+						</div>
+					</div>
+					<!-- widgets-wrap.// -->
+				</div>
+				<!-- col.// -->
+			</div>
+			<!-- row.// -->
+		</div>
+		<!-- container.// -->
+
+		<nav class="navbar navbar-main navbar-expand-lg border-bottom">
+			<div class="container">
+
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#main_nav" aria-controls="main_nav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="main_nav">
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="fa fa-bars text-muted mr-2"></i> Các hãng quần áo
+						</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" th:each="list : ${listHQAInNav}"
+									th:href="@{'/hang-quan-ao/' + ${list.idHangQA}}">[[${list.tenHang}]]</a>
+								<a class="dropdown-item" th:href="@{/hang-quan-ao}">Xem thêm</a>
+							</div></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="fa fa-bars text-muted mr-2"></i> Các loại quần áo
+						</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" th:each="list : ${listLQAInNav}"
+									th:href="@{'/loai-quan-ao/' + ${list.idLoaiQA}}">[[${list.loaiQuanAo}]]</a>
+								<a class="dropdown-item" th:href="@{/loai-quan-ao}">Xem thêm</a>
+							</div></li>
+						<li class="nav-item"><a class="nav-link" href="/khuyen-mai">Các sản
+								phẩm đang có khuyến mãi</a></li>
+
+					</ul>
+				</div>
+				<!-- collapse .// -->
+			</div>
+			<!-- container .// -->
+		</nav>
+
+	</section>
+	<!-- header-main .// -->
+
+	<section class="section-content bg-white padding-y">
+		<div class="container">
+
+			<div class="row">
+				<aside class="col-md-6">
+					<div class="card">
+						<article class="gallery-wrap">
+							<div class="img-big-wrap">
+								<div>
+									<a href="#"><img th:src="${product.urlAnh}"></a>
+								</div>
+							</div>
+							<!-- slider-product.// -->
+							<div class="thumbs-wrap">
+								<a href="#" class="item-thumb"> <img src=""></a> <a
+									href="#" class="item-thumb"> <img src=""></a> <a href="#"
+									class="item-thumb"> <img src=""></a> <a href="#"
+									class="item-thumb"> <img src=""></a>
+							</div>
+							<!-- slider-nav.// -->
+						</article>
+						<!-- gallery-wrap .end// -->
+					</div>
+					<!-- card.// -->
+				</aside>
+				<main class="col-md-6">
+					<article class="product-info-aside">
+
+						<h2 class="title mt-3" th:text="${product.tenQuanAo}"></h2>
+
+						<div class="rating-wrap my-3">
+							<ul class="rating-stars">
+								<li style="width: 80%" class="stars-active"><i
+									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+									class="fa fa-star"></i></li>
+								<li><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+									class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+									class="fa fa-star"></i></li>
+							</ul>
+							<small class="label-rating text-muted">132 reviews</small> <small
+								class="label-rating text-success"> <i
+								class="fa fa-clipboard-check"></i> 154 orders
+							</small>
+						</div>
+						<!-- rating-wrap.// -->
+
+						<div class="mb-3">
+							<var class="price1 h4"
+								th:text="${#numbers.formatDecimal(product.giaTien, 0, 'COMMA', 0, 'POINT')} + ' VND'"></var>
+								
+								<span class="text-muted" th:if="${product.maKM.phanTramKhuyenMai > 0}" th:text="'|Giá gốc: ' + ${#numbers.formatDecimal(product.giagoc, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span>
+
+						</div>
+						<!-- price-detail-wrap .// -->
+
+						<p th:text="${product.chiTietQuanAo}"></p>
+
+
+						<dl class="row">
+							<dt class="col-sm-3">Tên hãng</dt>
+							<dd class="col-sm-9">
+								<a th:href="@{'/hang-quan-ao/' + ${product.hangQA.idHangQA}}">[[${product.hangQA.tenHang}]]</a>
+							</dd>
+
+
+							<dt class="col-sm-3">Tồn kho</dt>
+							<dd class="col-sm-9">in Stock</dd>
+						</dl>
+
+						<div class="form-row  mt-4">
+							<div
+								th:replace="quantity_control :: quantity_control(1, ${product.idQuanAo})">
+							</div>
+							<!-- col.// -->
+							<div class="form-group col-md">
+								<a class="btn  btn-primary" id="buttonAdd2Cart"> <i
+									class="fas fa-shopping-cart"></i> <span class="text">MUA
+										NGAY</span>
+								</a>
+
+							</div>
+							<!-- col.// -->
+						</div>
+						<!-- row.// -->
+
+					</article>
+					<!-- product-info-aside .// -->
+				</main>
+				<!-- col.// -->
+			</div>
+			<!-- row.// -->
+
+			<!-- ================ ITEM DETAIL END .// ================= -->
+
+		</div>
+		<!-- container .//  -->
+	</section>
+	<!-- ========================= SECTION CONTENT END// ========================= -->
+
+	<!-- ========================= SECTION  ========================= -->
+	<section class="section-name padding-y bg">
+		<div class="container">
+
+
+			<!-- col.// -->
+
+			<aside class="col-md-4">
+
+				<div class="box">
+
+
+
+					<article th:each="list : ${listQA}" class="media mb-3">
+						<a th:href="@{'/products/details/' + ${list.idQuanAo}}"><img
+							class="img-sm mr-3" th:src="${list.urlAnh}"></a>
+						<div class="media-body">
+							<h6 class="mt-0">
+								<a th:href="@{'/products/details/' + ${list.idQuanAo}}"
+									th:text="${list.tenQuanAo}"></a>
+							</h6>
+							<p class="mb-2"
+								th:text="${#numbers.formatDecimal(list.giaTien, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
+						</div>
+					</article>
+
+
+
+
+
+				</div>
+				<!-- box.// -->
+			</aside>
+			<!-- col.// -->
+		</div>
+		<!-- row.// -->
+
+		</div>
+		<!-- container .//  -->
+	</section>
+
+	<div th:replace="fragments :: standard_modal">Modal Dialog</div>
+	<script type="text/javascript">
+		var csrfHeaderName = "[[${_csrf.headerName}]]";
+		var csrfValue = "[[${_csrf.token}]]"
+		var productId = "[[${product.idQuanAo}]]";
+	</script>
+</body>
+
+</html>

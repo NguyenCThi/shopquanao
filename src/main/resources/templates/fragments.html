@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+
+
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<script th:src="@{/js/jquery-2.0.0.min.js}" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script th:src="@{/js/bootstrap.bundle.min.js}" type="text/javascript"></script>
+<link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css" />
+
+<!-- Font awesome 5 -->
+<link th:href="@{/fonts/fontawesome/css/all.min.css}" type="text/css"
+	rel="stylesheet">
+
+<!-- custom style -->
+<link th:href="@{/css/ui.css}" rel="stylesheet" type="text/css" />
+<link th:href="@{/css/responsive.css}" rel="stylesheet" type="text/css" />
+
+<!-- custom javascript -->
+<script th:src="@{/js/script.js}" type="text/javascript"></script>
+</head>
+<body>
+	<div th:fragment="standard_modal" class="modal fade text-center"
+		id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="modalTitle">Warning</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<span id="modalBody"></span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

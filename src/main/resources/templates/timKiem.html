@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="max-age=604800" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Website title - bootstrap html template</title>
+
+<link href="/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<script src="/js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script src="/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+<!-- Font awesome 5 -->
+<link href="/fonts/fontawesome/css/all.min.css" type="text/css"
+	rel="stylesheet">
+
+<!-- custom style -->
+<link href="/css/ui.css" rel="stylesheet" type="text/css" />
+<link href="/css/responsive.css" rel="stylesheet" type="text/css" />
+
+<!-- custom javascript -->
+<script src="/js/script.js" type="text/javascript"></script>
+<script th:src="@{/js/add_to_card_index.js}" type="text/javascript"></script>
+
+</head>
+<body>
+
+
+	<header class="section-header">
+		<section class="header-main border-bottom">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-xl-2 col-lg-3 col-md-12">
+						<a href="/" class="brand-wrap"> <img
+							class="logo" src="/images/logoIndex.png">
+						</a>
+						<!-- brand-wrap.// -->
+					</div>
+					<div class="col-xl-6 col-lg-5 col-md-6">
+						<form th:action="@{/tim-kiem/1}" class="search-header" method="post">
+							<div class="input-group w-100">
+								<select class="custom-select border-right" name="search_select"
+									id="search_select">
+									<option value="tenQA">Tên sản phẩm</option>
+									<option value="tenHang">Tên hãng</option>
+									<option value="LoaiQA">Loại quần áo</option>
+
+								</select> <input type="text" class="form-control" placeholder="tìm kiếm"
+									name="keyword" th:value="${keyword}" required>
+
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="submit">
+										<i class="fa fa-search"></i> Search
+									</button>
+								</div>
+							</div>
+						</form>
+						<!-- search-wrap .end// -->
+					</div>
+					<!-- col.// -->
+					<div class="col-xl-4 col-lg-4 col-md-6">
+						<div class="widgets-wrap float-md-right">
+							<div class="widget-header mr-3" sec:authorize="isAuthenticated()">
+								<form th:action="@{/logout}" method="post" th:hidden="true"
+									name="LogoutForm">
+									<input type="submit" value="Logout" />
+								</form>
+								<a id="logoutLink" href="" class="widget-view">
+									<div class="icon-area">
+										<i class="fa fa-user"></i>
+									</div> <small class="text"> Đăng xuất </small>
+								</a>
+							</div>
+							<div class="widget-header mr-3" sec:authorize="isAnonymous()">
+								<a href="/dang-nhap" class="widget-view">
+									<div class="icon-area">
+										<i class="fa fa-user"></i>
+									</div> <small class="text"> Đăng nhập </small>
+								</a>
+							</div>
+							<div class="widget-header mr-3">
+								<a href="/hoa-don-nd" class="widget-view">
+									<div class="icon-area">
+										<i class="fa fa-store"></i> <span class="notify">0</span>
+									</div> <small class="text"> Hóa đơn </small>
+								</a>
+							</div>
+							<div class="widget-header">
+								<a href="/gio-hang" class="widget-view">
+									<div class="icon-area">
+										<i class="fa fa-shopping-cart"></i> <span class="notify"
+											th:unless="${cartItems.size()}">0</span> <span class="notify"
+											th:if="${cartItems.size()}" th:text="${cartItems.size()}"></span>
+									</div> <small class="text"> Cart </small>
+								</a>
+							</div>
+						</div>
+						<!-- widgets-wrap.// -->
+					</div>
+					<!-- col.// -->
+				</div>
+				<!-- row.// -->
+			</div>
+			<!-- container.// -->
+		</section>
+		<!-- header-main .// -->
+
+		<nav class="navbar navbar-main navbar-expand-lg border-bottom">
+			<div class="container">
+
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#main_nav" aria-controls="main_nav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="main_nav">
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="fa fa-bars text-muted mr-2"></i> Các hãng quần áo
+						</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" th:each="list : ${listHQAInNav}"
+									th:href="@{'/hang-quan-ao/' + ${list.idHangQA}}">[[${list.tenHang}]]</a>
+								<a class="dropdown-item" th:href="@{/hang-quan-ao}">Xem thêm</a>
+							</div></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+								<i class="fa fa-bars text-muted mr-2"></i> Các loại quần áo
+						</a>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" th:each="list : ${listLQAInNav}"
+									th:href="@{'/loai-quan-ao/' + ${list.idLoaiQA}}">[[${list.loaiQuanAo}]]</a>
+								<a class="dropdown-item" th:href="@{/loai-quan-ao}">Xem thêm</a>
+							</div></li>
+						<li class="nav-item"><a class="nav-link" href="/khuyen-mai">Các sản
+								phẩm đang có khuyến mãi</a></li>
+
+					</ul>
+				</div>
+				<!-- collapse .// -->
+			</div>
+			<!-- container .// -->
+		</nav>
+	</header>
+	<!-- section-header.// -->
+
+
+	<!-- ========================= SECTION CONTENT ========================= -->
+	<section class="section-content padding-y">
+		<div class="container">
+
+
+			<!-- ============================  FILTER TOP  ================================= -->
+			<div class="card mb-3" th:if="${listQA.size() > 0}">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-2">Your are here:</div>
+						<!-- col.// -->
+						<nav class="col-md-8" >
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+								<li class="breadcrumb-item active" aria-current="page">Tất cả sản phẩm</li>
+							</ol>
+						</nav>
+						<!-- col.// -->
+						
+					</div>
+					<hr>
+					<a th:href="@{'/tim-kiem/' + ${currentPage} + '?sortField=giaTien&sortDir=' + ${reverseSortDir}}" th:if="${sortDir} == 'desc'">Giá tăng dần</a>
+					<a th:href="@{'/tim-kiem/' + ${currentPage} + '?sortField=giaTien&sortDir=' + ${reverseSortDir}}" th:if="${sortDir} == 'asc'">Giá giảm dần</a>
+					<a>|</a>
+					<a th:href="@{'/tim-kiem/' + ${currentPage} + '?sortField=tenQuanAo&sortDir=' + ${reverseSortDir}}" th:if="${sortDir} == 'desc'">Chữ tăng dần</a>
+					<a th:href="@{'/tim-kiem/' + ${currentPage} + '?sortField=tenQuanAo&sortDir=' + ${reverseSortDir}}" th:if="${sortDir} == 'asc'">Chữ giảm dần</a>
+					<!-- row.// -->
+				</div>
+				<!-- card-body .// -->
+			</div>
+			<!-- card.// -->
+			<!-- ============================ FILTER TOP END.// ================================= -->
+
+			<header class="mb-3">
+				<div class="form-inline">
+					<strong class="mr-md-auto" th:text="${listQA.size() + ' sản phẩm'}"></strong>
+				
+
+				</div>
+			</header>
+			<!-- sect-heading -->
+
+			<div class="box text-center" th:if="${listQA.size() == 0}">
+				<p style="font-weight:bold">Loại quần áo này shop vẫn chưa có, mong bạn tìm kiếm loại quần áo khác!</p>
+			</div>
+
+			<div class="row">
+
+
+				<div class="col-md-3" th:each="list : ${listQA}">
+					<figure class="card card-product-grid">
+						<div class="img-wrap">
+							<span class="badge badge-danger"
+								th:if="${list.maKM.phanTramKhuyenMai > 0}"> -
+								[[${list.maKM.phanTramKhuyenMai}]] % </span> <img
+								th:src="${list.urlAnh}">
+						</div>
+						<br th:if="${list.maKM.phanTramKhuyenMai == 0}">
+						<!-- img-wrap.// -->
+						<figcaption class="info-wrap">
+							<a th:href="@{'/products/details/' + ${list.idQuanAo}}"
+								class="title mb-2"
+								th:text="${#strings.abbreviate(list.tenQuanAo,27)}"></a>
+							<div class="price-wrap">
+								<span class="price5"
+									th:text="${#numbers.formatDecimal(list.giaTien, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span>
+								<small class="text-muted">/mỗi mặt hàng</small>
+
+							</div>
+							<!-- price-wrap.// -->
+							<small class="text-muted"
+								th:if="${list.maKM.phanTramKhuyenMai > 0}"
+								th:text="'Giá gốc: ' + ${#numbers.formatDecimal(list.giagoc, 0, 'COMMA', 0, 'POINT')} + ' VND' + ' /mặt hàng'"></small>
+
+
+							<p class="text-muted " th:text="${list.hangQA.tenHang}"></p>
+							
+							<hr>
+
+
+
+							<a class="btn btn-outline-primary1" id="buttonAdd2CartIndex"
+								th:onclick="'javascript:addToCard(' + ${list.idQuanAo} + ')'">
+								<i class="fas fa-shopping-cart">Thêm vào giỏ hàng</i>
+							</a>
+
+
+
+						</figcaption>
+					</figure>
+				</div>
+				<!-- col.// -->
+
+
+			</div>
+			<!-- row end.// -->
+
+
+			<nav class="mb-4" aria-label="Page navigation sample"
+				th:if="${totalPages > 1}">
+				<ul class="pagination">
+					<li class="page-item disabled" th:if="${currentPage == 1}"><a
+						class="page-link">Previous</a></li>
+					<li class="page-item" th:unless="${currentPage == 1}"><a
+						class="page-link"
+						th:href="@{'/tim-kiem/'+ ${currentPage - 1}} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}">Previous</a></li>
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<li class="page-item active" th:unless="${currentPage != i}"><a
+							class="page-link">[[${i}]]</a></li>
+						<li class="page-item" th:if="${currentPage != i}"><a
+							class="page-link"
+							th:href="@{'/tim-kiem/' + ${i}} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a></li>
+					</span>
+
+
+					<li class="page-item disabled"
+						th:unless="${currentPage < totalPages}"><a class="page-link">Next</a></li>
+					<li class="page-item" th:if="${currentPage < totalPages}"><a
+						class="page-link"
+						th:href="@{'/tim-kiem/' + ${currentPage + 1}} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}">Next</a></li>
+				</ul>
+			</nav>
+
+
+
+
+		</div>
+		<!-- container .//  -->
+	</section>
+	<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
+
+
+
+	<script type="text/javascript">
+		var csrfHeaderName = "[[${_csrf.headerName}]]";
+		var csrfValue = "[[${_csrf.token}]]";
+	</script>
+	<div th:replace="fragments :: standard_modal">Modal Dialog</div>
+
+</body>
+</html>

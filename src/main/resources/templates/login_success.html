@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập thành công</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container text-center">
+    	<h2>Chào mừng [[${#httpServletRequest.remoteUser}]] đến với website!</h2>
+        <h3>Bạn đã đăng nhập vào tài khoản thành công!</h3>
+        <h4><a th:href="@{/}">Bấm vào đây để về trang chủ</a></h4>
+    </div>
+     
+</body>
+</html>
