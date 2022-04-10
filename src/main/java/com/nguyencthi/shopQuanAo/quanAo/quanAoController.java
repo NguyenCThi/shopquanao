@@ -41,4 +41,38 @@ public class quanAoController {
     private loaiQuanAoRepository lqaRepo;
     @Autowired 
     private quanAoServiceImpl qaService;
+    
+//    -----
+    @GetMapping("/products/details/{idQuanAo}")
+    	public String showDetailsProducts(@PathVariable("idQuanAo") Integer idQuanAo, Model model) {
+
+    		// Cập nhập giỏ hàng
+    		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		String test = auth.getName();
+    		if (test == "anonymousUser") {
+    			List<gioHangSession> cartItems = (ArrayList<gioHangSession>) session.getAttribute("cartItems");
+    			if (cartItems == null) {
+    				cartItems = new ArrayList<gioHangSession>();
+    			}
+    			List<hangQuanAo> listHQAInNav = hqaRepo.indexShow();
+                List<loaiQuanAo> listLQAInNav = lqaRepo.indexShow1();
+                model.addAttribute("listLQAInNav", listLQAInNav);
+                model.addAttribute("listHQAInNav", listHQAInNav);
+    			model.addAttribute("cartItems", cartItems);
+    		} else {
+    			nguoiDung nguoiDungODAY = repoND.findByEmail(test);
+    			List<gioHang> cartItems = cartRepo.findByNguoiDung(nguoiDungODAY.getIdNguoiDung());
+    			model.addAttribute("cartItems", cartItems);
+    			List<hangQuanAo> listHQAInNav = hqaRepo.indexShow();
+                List<loaiQuanAo> listLQAInNav = lqaRepo.indexShow1();
+                model.addAttribute("listLQAInNav", listLQAInNav);
+                model.addAttribute("listHQAInNav", listHQAInNav);
+    		}
+
+    		quanAo product = repoQA.findById(idQuanAo).get();
+    		List<quanAo> listQA = repoQA.get3RandomItem();
+    		model.addAttribute("product", product);
+    		model.addAttribute("listQA", listQA);
+    		return "detailsQA";
+    	}
 }
