@@ -27,11 +27,7 @@ import com.nguyencthi.shopQuanAo.nguoiDung.nguoiDungRepository;
 
 @Controller
 public class quanAoController {
-<<<<<<< HEAD
 @Autowired
-=======
-	@Autowired
->>>>>>> b34dfa16e526c75a47a36c795e484f4ad07b72de
 	private quanAoRepository repoQA;
 	@Autowired
 	private HttpSession session;
