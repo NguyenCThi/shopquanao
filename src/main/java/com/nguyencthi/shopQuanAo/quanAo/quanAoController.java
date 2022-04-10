@@ -43,36 +43,44 @@ public class quanAoController {
     private quanAoServiceImpl qaService;
     
 //    -----
-    @GetMapping("/products/details/{idQuanAo}")
-    	public String showDetailsProducts(@PathVariable("idQuanAo") Integer idQuanAo, Model model) {
+@GetMapping("/products")
+public String listCategories(Model model) {
+	return showAll(1, model, "giaTien", "asc");
+}
 
-    		// Cập nhập giỏ hàng
-    		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    		String test = auth.getName();
-    		if (test == "anonymousUser") {
-    			List<gioHangSession> cartItems = (ArrayList<gioHangSession>) session.getAttribute("cartItems");
-    			if (cartItems == null) {
-    				cartItems = new ArrayList<gioHangSession>();
-    			}
-    			List<hangQuanAo> listHQAInNav = hqaRepo.indexShow();
-                List<loaiQuanAo> listLQAInNav = lqaRepo.indexShow1();
-                model.addAttribute("listLQAInNav", listLQAInNav);
-                model.addAttribute("listHQAInNav", listHQAInNav);
-    			model.addAttribute("cartItems", cartItems);
-    		} else {
-    			nguoiDung nguoiDungODAY = repoND.findByEmail(test);
-    			List<gioHang> cartItems = cartRepo.findByNguoiDung(nguoiDungODAY.getIdNguoiDung());
-    			model.addAttribute("cartItems", cartItems);
-    			List<hangQuanAo> listHQAInNav = hqaRepo.indexShow();
-                List<loaiQuanAo> listLQAInNav = lqaRepo.indexShow1();
-                model.addAttribute("listLQAInNav", listLQAInNav);
-                model.addAttribute("listHQAInNav", listHQAInNav);
-    		}
-
-    		quanAo product = repoQA.findById(idQuanAo).get();
-    		List<quanAo> listQA = repoQA.get3RandomItem();
-    		model.addAttribute("product", product);
-    		model.addAttribute("listQA", listQA);
-    		return "detailsQA";
-    	}
+@GetMapping("/products/{pageNo}")
+public String showAll(@PathVariable(value = "pageNo") int pageNo, Model model, @Param("sortField") String sortField, @Param("sortDir") String sortDir) {
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String test = auth.getName();
+if (test == "anonymousUser") {
+	List<gioHangSession> cartItems = (ArrayList<gioHangSession>) session.getAttribute("cartItems");
+	if (cartItems == null) {
+		cartItems = new ArrayList<gioHangSession>();
+	}
+	List<hangQuanAo> listHQAInNav = hqaRepo.indexShow();
+	List<loaiQuanAo> listLQAInNav = lqaRepo.indexShow1();
+	model.addAttribute("listLQAInNav", listLQAInNav);
+	model.addAttribute("listHQAInNav", listHQAInNav);
+	model.addAttribute("cartItems", cartItems);
+} else {
+	nguoiDung nguoiDungODAY = repoND.findByEmail(test);
+	List<gioHang> cartItems = cartRepo.findByNguoiDung(nguoiDungODAY.getIdNguoiDung());
+	model.addAttribute("cartItems", cartItems);
+	List<hangQuanAo> listHQAInNav = hqaRepo.indexShow();
+	List<loaiQuanAo> listLQAInNav = lqaRepo.indexShow1();
+	model.addAttribute("listLQAInNav", listLQAInNav);
+	model.addAttribute("listHQAInNav", listHQAInNav);
+}
+int pageSize = 8;
+Page<quanAo> page = qaService.findAllPage(pageNo, pageSize, sortField, sortDir);
+List<quanAo> listQA = page.getContent();
+model.addAttribute("currentPage", pageNo);
+model.addAttribute("totalPages", page.getTotalPages());
+model.addAttribute("totalItems", page.getTotalElements());
+model.addAttribute("sortField", sortField);
+model.addAttribute("sortDir", sortDir);
+model.addAttribute("listQA", listQA);
+model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+return "qa";
+}
 }
