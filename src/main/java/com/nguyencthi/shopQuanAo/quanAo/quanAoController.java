@@ -27,7 +27,11 @@ import com.nguyencthi.shopQuanAo.nguoiDung.nguoiDungRepository;
 
 @Controller
 public class quanAoController {
+<<<<<<< HEAD
+@Autowired
+=======
 	@Autowired
+>>>>>>> b34dfa16e526c75a47a36c795e484f4ad07b72de
 	private quanAoRepository repoQA;
 	@Autowired
 	private HttpSession session;
@@ -75,47 +79,4 @@ public class quanAoController {
     		model.addAttribute("listQA", listQA);
     		return "detailsQA";
     	}
-}
-
-// Phuc voo day
-
-	
-	
-	@GetMapping("/products/{pageNo}")
-	public String showAll(@PathVariable(value = "pageNo") int pageNo, Model model, @Param("sortField") String sortField, @Param("sortDir") String sortDir) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String test = auth.getName();
-		if (test == "anonymousUser") {
-			List<gioHangSession> cartItems = (ArrayList<gioHangSession>) session.getAttribute("cartItems");
-			if (cartItems == null) {
-				cartItems = new ArrayList<gioHangSession>();
-			}
-			List<hangQuanAo> listHQAInNav = hqaRepo.indexShow();
-            List<loaiQuanAo> listLQAInNav = lqaRepo.indexShow1();
-            model.addAttribute("listLQAInNav", listLQAInNav);
-            model.addAttribute("listHQAInNav", listHQAInNav);
-			model.addAttribute("cartItems", cartItems);
-		} else {
-			nguoiDung nguoiDungODAY = repoND.findByEmail(test);
-			List<gioHang> cartItems = cartRepo.findByNguoiDung(nguoiDungODAY.getIdNguoiDung());
-			model.addAttribute("cartItems", cartItems);
-			List<hangQuanAo> listHQAInNav = hqaRepo.indexShow();
-            List<loaiQuanAo> listLQAInNav = lqaRepo.indexShow1();
-            model.addAttribute("listLQAInNav", listLQAInNav);
-            model.addAttribute("listHQAInNav", listHQAInNav);
-		}
-		int pageSize = 8;
-		Page<quanAo> page = qaService.findAllPage(pageNo, pageSize, sortField, sortDir);
-		List<quanAo> listQA = page.getContent();
-		model.addAttribute("currentPage", pageNo);
-		model.addAttribute("totalPages", page.getTotalPages());
-		model.addAttribute("totalItems", page.getTotalElements());
-		model.addAttribute("sortField", sortField);
-	    model.addAttribute("sortDir", sortDir);
-		model.addAttribute("listQA", listQA);
-		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-		return "qa";
-	}
-	
-
 }
